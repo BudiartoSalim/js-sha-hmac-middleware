@@ -6,8 +6,9 @@ function hmacSha256Auth(request, response, next) {
 
   if (request.headers.signature === hash) {
     next();
+
   } else {
-    response.status(403).json({ message: 'Unauthorized.' })
+    response.status(401).json({ message: 'Unauthorized.' })
   }
 }
 
