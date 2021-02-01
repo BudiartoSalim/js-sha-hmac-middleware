@@ -1,13 +1,13 @@
 const crypto = require('crypto');
 
-function hmacSha256Auth(req, res, next) {
+function hmacSha256Auth(request, response, next) {
   const secret = process.env.SIGNING_SECRET;
-  const hash = crypto.createHmac('SHA256', secret).update(JSON.stringify(req.body)).digest('hex');
+  const hash = crypto.createHmac('SHA256', secret).update(JSON.stringify(request.body)).digest('hex');
 
-  if (req.headers.signature === hash) {
+  if (request.headers.signature === hash) {
     next();
   } else {
-    res.status(403).json({ message: 'Unauthorized.' })
+    response.status(403).json({ message: 'Unauthorized.' })
   }
 }
 
